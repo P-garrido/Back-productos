@@ -1,0 +1,43 @@
+
+### Recuperar todos los productos
+GET http://localhost:1234/products
+
+
+
+### Recuperar un producto por id
+GET http://localhost:1234/products/1
+
+### Recuperar los productos por tipo
+GET http://localhost:1234/products?tipo=casa
+
+
+### Crear un producto
+
+POST http://localhost:1234/products
+Content-Type: application/json
+
+{
+    "id": "9",
+    "nombre": "Gel para pietas",
+    "descripcion": "Boya para piletas",
+    "tipo": [
+      "pileta"
+    ],
+    "imagen": "https://boya.jpg",
+    "precio": "$3500"
+  }
+
+
+### Modificar algo de un producto
+
+PATCH http://localhost:1234/products/5
+Content-Type: application/json
+
+{
+
+    "precio": "$4500"
+}
+
+### Borrar un producto
+
+DELETE http://localhost:1234/products/1
