@@ -88,34 +88,42 @@ export class ProductModel {
     return deleted;
   }
 
-  // static async update({ id, prod }) {
-  //   const { nombre,
-  //     descripcion,
-  //     imagen,
-  //     precio,
-  //     tipo } = prod
+  static async update({ id, prod }) {
+    const product = await connection.query(
+      `SELECT *
+      FROM productos
+      WHERE id=?;`, [id]
+    );
 
-  //   try {
-  //     await connection.query(
-  //       `UPDATE productos
-  //         SET nombre=?, descripcion=?, imagen=?, precio=?, tipo=?
-  //         WHERE id=?;`, [nombre, descripcion, imagen, precio, tipo, id]
-  //     );
-  //     const newProd = await connection.query(
-  //       `SELECT *
-  //     FROM productos
-  //     WHERE id=?;`, [id]
-  //     );
-  //     if (newProd.length != 0) {
-  //       return newProd[0];
-  //     }
+    const { nombre,
+      descripcion,
+      imagen,
+      precio,
+      tipo } = prod ?? product;
 
-  //   }
-  //   catch (e) {
-  //     throw new Error("No se pudo actualizar el producto");
-  //   }
-  //   return false;
-  // }
+    try {
+      await connection.query(
+        `UPDATE productos
+          SET nombre=?, descripcion=?, imagen=?, precio=?, tipo=?
+          WHERE id=?;`, [nombre, descripcion, imagen, precio, tipo, id]
+      );
+
+      const newProduct = await connection.query(
+        `SELECT *
+      FROM productos
+      WHERE id=?;`, [id]
+      );
+
+      if (newProd.length != 0) {
+        return newProd[0];
+      }
+
+    }
+    catch (e) {
+      throw new Error("No se pudo actualizar el producto");
+    }
+    return false;
+  }
 
 
 

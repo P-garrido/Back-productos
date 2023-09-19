@@ -10,7 +10,7 @@ app.use(corsMiddleware());
 
 //Falta ver bien lo de web (CORS)
 
-app.use("/products", productsRouter);
+app.use("/products", productsRouter); //ARREGLAR UPDATE EN MYSQL Y COMO DEVOLVER IMÁGEN
 
 const PORT = process.env.PORT ?? 1234;
 

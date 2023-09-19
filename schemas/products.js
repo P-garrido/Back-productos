@@ -4,7 +4,7 @@ const ProductSchema = z.object({
   nombre: z.string(),
   descripcion: z.string(),
   tipo: z.string(),
-  imagen: z.string().url().endsWith(".jpg"),
+  imagen: z.string().url(),
   precio: z.number().positive()
 })
 
