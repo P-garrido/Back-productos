@@ -6,7 +6,7 @@ export class ProductModel {
   static async getAll({ tipo }) {
     if (tipo) {
       return products.filter(
-        prod => prod.tipo.some(t => t.toLowerCase() === tipo.toLowerCase())
+        prod => prod.tipo.toLowerCase() === tipo.toLowerCase()
       )
     }
 

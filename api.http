@@ -17,25 +17,22 @@ POST http://localhost:1234/products
 Content-Type: application/json
 
 {
-    "id": "9",
     "nombre": "Gel para pietas",
     "descripcion": "Boya para piletas",
-    "tipo": [
-      "pileta"
-    ],
+    "tipo": "pileta",
     "imagen": "https://boya.jpg",
-    "precio": "$3500"
+    "precio": 3500
   }
 
 
 ### Modificar algo de un producto
 
-PATCH http://localhost:1234/products/5
+PATCH http://localhost:1234/products/2
 Content-Type: application/json
 
 {
 
-    "precio": "$4500"
+    "precio": 4550
 }
 
 ### Borrar un producto

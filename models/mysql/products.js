@@ -1,29 +1,27 @@
-import { mysql } from 'mysql2/promise';
+import mysql from 'mysql2/promise';
 
 const DEFAULT_CONFIG = {
   host: 'localhost',
   user: 'root',
   port: 3306,
   password: '',
-  database: 'quimica'
+  database: 'quimicadb'
 }
 
 const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG;
 
-const connection = await mysql.connection(connectionString);
+const connection = await mysql.createConnection(connectionString);
 
-export class MovieModel {
+export class ProductModel {
 
   static async getAll({ tipo }) {
     if (tipo) {
       const lowerCaseTipo = tipo.toLowerCase();
 
       const products = await connection.query(
-        `SELECT p.id, nombre, imagen, p.descripcion, precio  
-        FROM tipos t
-        INNER JOIN productos_tipos pt ON t.id=pt.id_tipo
-        INNER JOIN productos p ON pt.id_prod=p.id
-        WHERE LOWER(t.descripcion)=?;`, [lowerCaseTipo]
+        `SELECT * 
+        FROM productos
+        WHERE LOWER(tipo)=?;`, [lowerCaseTipo]
       )
 
       return products;
@@ -36,7 +34,7 @@ export class MovieModel {
   static async getById({ id }) {
     const products = await connection.query(
       `SELECT *
-      FROM products
+      FROM productos
       WHERE id=?;`, [id]
     )
     if (products.length == 0) {
@@ -50,6 +48,76 @@ export class MovieModel {
     const { nombre,
       descripcion,
       imagen,
-      precio } = product; //VER QUE ONDA EL TIPO
+      precio,
+      tipo } = product;
+
+    try {
+      await connection.query(
+        `INSERT INTO productos ( nombre, descripcion, imagen, precio, tipo)
+        VALUES(?,?,?,?,?);`, [nombre, descripcion, imagen, precio, tipo]
+      );
+      const [prod] = await connection.query(
+        `SELECT *
+      FROM productos
+      WHERE nombre=?;`, [nombre]
+      )
+      if (prod.length != 0) {
+        return prod[0];
+      }
+
+
+    }
+    catch (e) {
+      throw new Error("No se pudo crear el producto");
+    }
+    return false;
+
   }
+
+  static async delete({ id }) {
+    let deleted = false;
+    try {
+      await connection.query(
+        `DELETE FROM productos WHERE id=?;`, [id]
+      );
+      deleted = true;
+    }
+    catch (e) {
+      throw new Error("No se pudo eliminar el producto");
+    }
+    return deleted;
+  }
+
+  // static async update({ id, prod }) {
+  //   const { nombre,
+  //     descripcion,
+  //     imagen,
+  //     precio,
+  //     tipo } = prod
+
+  //   try {
+  //     await connection.query(
+  //       `UPDATE productos
+  //         SET nombre=?, descripcion=?, imagen=?, precio=?, tipo=?
+  //         WHERE id=?;`, [nombre, descripcion, imagen, precio, tipo, id]
+  //     );
+  //     const newProd = await connection.query(
+  //       `SELECT *
+  //     FROM productos
+  //     WHERE id=?;`, [id]
+  //     );
+  //     if (newProd.length != 0) {
+  //       return newProd[0];
+  //     }
+
+  //   }
+  //   catch (e) {
+  //     throw new Error("No se pudo actualizar el producto");
+  //   }
+  //   return false;
+  // }
+
+
+
+
 }

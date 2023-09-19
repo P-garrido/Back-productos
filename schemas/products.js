@@ -1,12 +1,11 @@
 import z from "zod";
 
 const ProductSchema = z.object({
-  id: z.string(),
   nombre: z.string(),
   descripcion: z.string(),
-  tipo: z.array(z.string()),
+  tipo: z.string(),
   imagen: z.string().url().endsWith(".jpg"),
-  precio: z.string()
+  precio: z.number().positive()
 })
 
 export function validateProduct(product) {
