@@ -13,6 +13,7 @@
         const html = products.map(product => {
           return `
             <article data-id="${product.id}">
+              <img src="${product.imagen}">
               <h2>${product.nombre}</h2>
               <p>${product.precio}</p>
 
@@ -30,5 +31,6 @@
 <body>
   <main></main>
 </body>
+
 
 </html>

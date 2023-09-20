@@ -31,7 +31,7 @@ PATCH http://localhost:1234/products/2
 Content-Type: application/json
 
 {
-
+  
     "precio": 4550
 }
 

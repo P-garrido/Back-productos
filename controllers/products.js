@@ -1,34 +1,44 @@
-import { ProductModel } from "../models/mysql/products.js";
 import { validateProduct, validatePartialProduct } from "../schemas/products.js";
 
 export class ProductController {
-  static async getAll(req, res) {
+
+  constructor({ productModel }) {
+    this.productModel = productModel;
+  }
+
+  getAll = async (req, res) => {
     const { tipo } = req.query;
-    const products = await ProductModel.getAll({ tipo });
+    const products = await this.productModel.getAll({ tipo });
     res.json(products);
   }
 
-  static async getById(req, res) {
+  getById = async (req, res) => {
     const { id } = req.params;
-    const product = await ProductModel.getById({ id });
+    const product = await this.productModel.getById({ id });
     if (product) {
+      const imageData = {
+        "type": "Buffer",
+        "data": product[0].imagen.data
+
+      };
+
       return res.json(product);
     }
     res.status(404).json({ message: "No se encontró el producto" });
   }
 
-  static async create(req, res) {
+  create = async (req, res) => {
     const result = validateProduct(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    const newProduct = await ProductModel.create({ product: result.data });
+    const newProduct = await this.productModel.create({ product: result.data });
     res.status(201).json(newProduct);
   }
 
-  static async delete(req, res) {
+  delete = async (req, res) => {
     const { id } = req.params;
-    const result = await ProductModel.delete({ id });
+    const result = await this.productModel.delete({ id });
     if (result == false) {
       return res.status(404).message({ message: "No se encontró el producto" });
     }
@@ -36,14 +46,15 @@ export class ProductController {
 
   }
 
-  static async update(req, res) {
+  update = async (req, res) => {
     const result = validatePartialProduct(req.body);
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });
     }
 
     const { id } = req.params;
-    const updatedProduct = await ProductModel.update({ id, product: result.data });
+    const updatedProduct = await this.productModel.update({ id, product: result.data });
     return res.json(updatedProduct);
   }
 }
+

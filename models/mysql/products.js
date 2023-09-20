@@ -24,11 +24,11 @@ export class ProductModel {
         WHERE LOWER(tipo)=?;`, [lowerCaseTipo]
       )
 
-      return products;
+      return products[0];
     }
 
     const products = await connection.query("SELECT * FROM productos;");
-    return products;
+    return products[0];
   }
 
   static async getById({ id }) {
@@ -95,12 +95,16 @@ export class ProductModel {
       WHERE id=?;`, [id]
     );
 
-    const { nombre,
+    const {
+      nombre,
       descripcion,
       imagen,
       precio,
-      tipo } = prod ?? product;
-
+      tipo
+    } = {
+      ...product,
+      ...prod
+    };
     try {
       await connection.query(
         `UPDATE productos
@@ -114,8 +118,8 @@ export class ProductModel {
       WHERE id=?;`, [id]
       );
 
-      if (newProd.length != 0) {
-        return newProd[0];
+      if (newProduct.length != 0) {
+        return newProduct[0];
       }
 
     }
@@ -124,8 +128,5 @@ export class ProductModel {
     }
     return false;
   }
-
-
-
 
 }

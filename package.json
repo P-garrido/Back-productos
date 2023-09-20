@@ -6,7 +6,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev1": "node --watch app.js"
+    "dev1": "node --watch server-mysql.js",
+    "dev2": "npx servor ./web"
   },
   "author": "Pedro Garrido",
   "license": "ISC",
