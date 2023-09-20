@@ -8,7 +8,7 @@ GET http://localhost:1234/products
 GET http://localhost:1234/products/2
 
 ### Recuperar los productos por tipo
-GET http://localhost:1234/products?tipo=casa
+GET http://localhost:1234/products?tipo=pileta
 
 
 ### Crear un producto
@@ -17,12 +17,12 @@ POST http://localhost:1234/products
 Content-Type: application/json
 
 {
-    "nombre": "Gel para pietas",
-    "descripcion": "Boya para piletas",
-    "tipo": "pileta",
-    "imagen": "https://boya.jpg",
-    "precio": 3500
-  }
+  "nombre": "Envase",
+  "descripcion": "Envase de plástico",
+  "tipo": "otros",
+  "imagen": "https://envaseplastico.jpg",
+  "precio": 1800
+}
 
 
 ### Modificar algo de un producto
@@ -31,10 +31,9 @@ PATCH http://localhost:1234/products/2
 Content-Type: application/json
 
 {
-  
-    "precio": 4550
+  "precio": 3250
 }
 
 ### Borrar un producto
 
-DELETE http://localhost:1234/products/1
+DELETE http://localhost:1234/products/14

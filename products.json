@@ -3,9 +3,7 @@
     "id": "0",
     "nombre": "Cloro líquido",
     "descripcion": "Cloro líquido de disolución rápida para piletas",
-    "tipo": [
-      "pileta"
-    ],
+    "tipo": "pileta",
     "imagen": "https://i.ebayimg.com/images/g/4goAAOSwMyBe7hnQ/s-l1200.webp",
     "precio": "$3000"
   },
@@ -13,9 +11,7 @@
     "id": "1",
     "nombre": "Cloro en pastillas",
     "descripcion": "Cloro en pastillas de disolución rápida para piletas",
-    "tipo": [
-      "pileta"
-    ],
+    "tipo": "pileta",
     "imagen": "../assets/cloro_en_pastillas.jpg",
     "precio": "$3500"
   },
@@ -23,9 +19,7 @@
     "id": "2",
     "nombre": "Cloro granulado",
     "descripcion": "Cloro granuladdo de disolución rápida para piletas",
-    "tipo": [
-      "pileta"
-    ],
+    "tipo": "pileta",
     "imagen": "../assets/cloro_granulado.jpg",
     "precio": "$4000"
   },
@@ -33,9 +27,7 @@
     "id": "3",
     "nombre": "Clarificador",
     "descripcion": "Clarificador para piletas",
-    "tipo": [
-      "pileta"
-    ],
+    "tipo": "pileta",
     "imagen": "../assets/clarificador.jpg",
     "precio": "$5000"
   },
@@ -43,9 +35,7 @@
     "id": "4",
     "nombre": "Barrefondo",
     "descripcion": "Barrefondo para limpiar piletas",
-    "tipo": [
-      "pileta"
-    ],
+    "tipo": "pileta",
     "imagen": "../assets/barrefondo.jpg",
     "precio": "$10000"
   },
@@ -53,9 +43,7 @@
     "id": "5",
     "nombre": "Pintura",
     "descripcion": "Pintura para exteriores",
-    "tipo": [
-      "casa"
-    ],
+    "tipo": "casa",
     "imagen": "../assets/pintura.jpg",
     "precio": "$4200"
   },
@@ -63,9 +51,7 @@
     "id": "6",
     "nombre": "Lavandina",
     "descripcion": "Lavandina para lavar la ropa",
-    "tipo": [
-      "limpieza"
-    ],
+    "tipo": "limpieza",
     "imagen": "../assets/lavandina.jpg",
     "precio": "$1000"
   }

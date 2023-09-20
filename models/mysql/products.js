@@ -28,6 +28,7 @@ export class ProductModel {
     }
 
     const products = await connection.query("SELECT * FROM productos;");
+
     return products[0];
   }
 
@@ -47,9 +48,10 @@ export class ProductModel {
   static async create({ product }) {
     const { nombre,
       descripcion,
+      tipo,
       imagen,
-      precio,
-      tipo } = product;
+      precio
+    } = product;
 
     try {
       await connection.query(
@@ -77,10 +79,12 @@ export class ProductModel {
   static async delete({ id }) {
     let deleted = false;
     try {
-      await connection.query(
+      const result = await connection.query(
         `DELETE FROM productos WHERE id=?;`, [id]
       );
-      deleted = true;
+      if (result[0].affectedRows === 1) {
+        deleted = true;
+      }
     }
     catch (e) {
       throw new Error("No se pudo eliminar el producto");
@@ -88,28 +92,33 @@ export class ProductModel {
     return deleted;
   }
 
-  static async update({ id, prod }) {
-    const product = await connection.query(
+  static async update({ id, product }) {
+    const oldProduct = await connection.query(
       `SELECT *
       FROM productos
       WHERE id=?;`, [id]
     );
 
+    if (oldProduct.length === 0) {
+      throw new Error("Producto no encontrado");
+    }
+
+    const prod = oldProduct[0][0];
+
+
     const {
-      nombre,
-      descripcion,
-      imagen,
-      precio,
-      tipo
-    } = {
-      ...product,
-      ...prod
-    };
+      nombre: newNombre = prod.nombre,
+      descripcion: newDescripcion = prod.descripcion,
+      imagen: newImagen = prod.imagen,
+      precio: newPrecio = prod.precio,
+      tipo: newTipo = prod.tipo,
+    } = product;
     try {
       await connection.query(
         `UPDATE productos
-          SET nombre=?, descripcion=?, imagen=?, precio=?, tipo=?
-          WHERE id=?;`, [nombre, descripcion, imagen, precio, tipo, id]
+      SET nombre=?, descripcion=?, imagen=?, precio=?, tipo=?
+      WHERE id=?;`,
+        [newNombre, newDescripcion, newImagen, newPrecio, newTipo, id]
       );
 
       const newProduct = await connection.query(
@@ -124,7 +133,7 @@ export class ProductModel {
 
     }
     catch (e) {
-      throw new Error("No se pudo actualizar el producto");
+      console.log(e);
     }
     return false;
   }

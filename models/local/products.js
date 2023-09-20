@@ -19,9 +19,9 @@ export class ProductModel {
 
   }
 
-  static async create({ prod }) {
+  static async create({ product }) {
     const newProduct = {
-      ...prod
+      ...product
     }
     products.push(newProduct);
     return newProduct
@@ -35,13 +35,13 @@ export class ProductModel {
     return true
   }
 
-  static async update({ id, prod }) {
+  static async update({ id, product }) {
     const producIndex = products.findIndex(prod => prod.id === id)
     if (producIndex === -1) return false
 
     products[producIndex] = {
       ...products[producIndex],
-      ...prod
+      ...product
     }
 
     return products[producIndex]
